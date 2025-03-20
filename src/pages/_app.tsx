@@ -16,14 +16,14 @@ const theme = extendTheme({ config });
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  const isDashboard = router.pathname.startsWith("/dashboard");
+  const isNotLoginOrRegister = !["/login", "/register"].includes(router.pathname);
 
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
         <InactivityProvider>
           <TokenRefreshProvider>
-            {isDashboard ? (
+            {isNotLoginOrRegister ? (
               <DashboardLayout>
                 <Component {...pageProps} />
               </DashboardLayout>
