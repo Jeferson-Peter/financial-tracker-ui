@@ -37,19 +37,21 @@ export default async function RootLayout({
         <AppProviders>
             {isPublicPage ? (
                 <>
-                    {children}
-                    <Toaster richColors position="top-right" />
-                </>
-            ) : (
-                <div className="w-full flex min-h-screen">
-                    <AppSidebar />
-                    <main className="flex-1 min-h-screen p-6">
-                        <div className="ml-auto mr-auto w-full max-w-4xl px-4">
-                            {children}
-                        </div>
+                    <main className="w-full flex items-center justify-center min-h-screen bg-background p-4">
+                        {children}
                         <Toaster richColors position="top-right" />
                     </main>
-                </div>
+                </>
+            ) : (
+                <main className="w-full flex min-h-screen bg-background">
+                    <AppSidebar />
+                    <div className="flex-1 min-h-screen p-6 flex justify-center">
+                        <div className="w-full max-w-4xl px-4">
+                            {children}
+                        </div>
+                    </div>
+                    <Toaster richColors position="top-right" />
+                </main>
             )}
         </AppProviders>
         </body>
