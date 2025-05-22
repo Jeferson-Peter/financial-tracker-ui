@@ -28,6 +28,7 @@ export default async function RootLayout({
 }) {
     const headerList = await headers();
     const pathname = headerList.get("x-pathname") || "";
+    console.log(pathname);
     const isPublicPage = ["/login", "/register"].includes(pathname);
 
     return (
@@ -40,7 +41,7 @@ export default async function RootLayout({
                     <Toaster richColors position="top-right" />
                 </>
             ) : (
-                <div className="flex min-h-screen">
+                <div className="w-full flex min-h-screen">
                     <AppSidebar />
                     <main className="flex-1 min-h-screen p-6">
                         <div className="ml-auto mr-auto w-full max-w-4xl px-4">
