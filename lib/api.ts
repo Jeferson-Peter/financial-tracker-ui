@@ -10,7 +10,6 @@ export const djangoAPI = axios.create({
 djangoAPI.interceptors.response.use(
     (res) => res,
     (error) => {
-        console.error("Django API error:", error);
         return Promise.reject(error);
     }
 );

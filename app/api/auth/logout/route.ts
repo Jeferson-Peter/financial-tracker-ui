@@ -30,7 +30,6 @@ export async function POST() {
         return response;
     } catch (err: unknown) {
         const axiosError = err as AxiosError<{ detail?: string; error?: string }>;
-        console.error("Logout error:", axiosError.response?.data);
 
         const errorMessage =
             axiosError.response?.data?.detail ||

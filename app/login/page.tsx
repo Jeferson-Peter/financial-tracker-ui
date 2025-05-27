@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
 
 const loginSchema = z.object({
     username: z.string().min(1, "Username is required"),
@@ -27,6 +28,8 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
     const router = useRouter();
+    const { refetchUser } = useAuth();
+
 
     const form = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
@@ -40,9 +43,13 @@ export default function LoginPage() {
         try {
             await axios.post("/api/auth/login", data);
             toast.success("Login successful!");
-            router.push("/dashboard");
+            router.replace("/dashboard");
+            router.refresh()
+            await refetchUser();
         } catch (error) {
-            const err = error as AxiosError<{ detail?: string; error?: string }>;
+            const err = error as AxiosError<{ error?: string; detail?: string }>;
+
+
             toast.error(
                 err.response?.data?.error ||
                 err.response?.data?.detail ||
@@ -50,7 +57,6 @@ export default function LoginPage() {
             );
         }
     };
-
     const renderField = (
         name: keyof LoginFormValues,
         label: string,

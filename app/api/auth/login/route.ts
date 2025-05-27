@@ -5,11 +5,9 @@ import type { AxiosError } from "axios";
 export async function POST(req: NextRequest) {
     const body = await req.json();
 
-    console.log("📩 Body recebido pelo Next.js API Route:", body);
 
     try {
         const { data } = await djangoAPI.post("/auth/login/", body);
-        console.log("✅ Django respondeu com:", data);
 
         const response = NextResponse.json({ success: true });
 
@@ -28,11 +26,6 @@ export async function POST(req: NextRequest) {
         return response;
     } catch (err: unknown) {
         const axiosError = err as AxiosError<{ detail?: string; error?: string }>;
-
-        console.error("❌ Erro ao fazer login com o Django:");
-        console.error("📦 status:", axiosError.response?.status);
-        console.error("📦 data:", axiosError.response?.data);
-        console.error("📦 message:", axiosError.message);
 
         const errorMessage =
             axiosError.response?.data?.detail ||

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { headers } from "next/headers";
-import { AppSidebar } from "@/components/dashboard/app-sidebar";
-import { Toaster } from "@/components/ui/sonner";
 import { AppProviders } from "./providers";
+import PrivateLayout from "@/components/layout/private-layout";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,7 +28,6 @@ export default async function RootLayout({
 }) {
     const headerList = await headers();
     const pathname = headerList.get("x-pathname") || "";
-    console.log(pathname);
     const isPublicPage = ["/login", "/register"].includes(pathname);
 
     return (
@@ -36,22 +35,12 @@ export default async function RootLayout({
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AppProviders>
             {isPublicPage ? (
-                <>
-                    <main className="w-full flex items-center justify-center min-h-screen bg-background p-4">
-                        {children}
-                        <Toaster richColors position="top-right" />
-                    </main>
-                </>
-            ) : (
-                <main className="w-full flex min-h-screen bg-background">
-                    <AppSidebar />
-                    <div className="flex-1 min-h-screen p-6 flex justify-center">
-                        <div className="w-full max-w-4xl px-4">
-                            {children}
-                        </div>
-                    </div>
+                <main className="w-full flex items-center justify-center min-h-screen bg-background p-4">
+                    {children}
                     <Toaster richColors position="top-right" />
                 </main>
+            ) : (
+                <PrivateLayout>{children}</PrivateLayout>
             )}
         </AppProviders>
         </body>

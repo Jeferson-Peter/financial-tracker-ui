@@ -40,11 +40,13 @@ import { cn } from "@/lib/utils";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import {toast} from "sonner";
 import {AxiosError} from "axios";
+import {useAuth} from "@/hooks/useAuth";
 
 export function AppSidebar() {
     const pathname = usePathname();
     const { state, toggleSidebar } = useSidebar();
     const router = useRouter();
+    const { user } = useAuth();
 
     const isCollapsed = state === "collapsed";
 
@@ -77,7 +79,8 @@ export function AppSidebar() {
 
             if (res.ok) {
                 toast.success("Logged out successfully");
-                router.push("/login");
+                router.replace("/login");
+                router.refresh();
             } else {
                 toast.error(data?.error || "Logout failed");
             }
@@ -97,7 +100,6 @@ export function AppSidebar() {
 
     return (
         <Sidebar collapsible="icon" className="border-r bg-background">
-            {/* Header */}
             <SidebarHeader>
                 <div className="flex items-center justify-between px-4 py-2">
                     {!isCollapsed && (
@@ -111,7 +113,6 @@ export function AppSidebar() {
                 </div>
             </SidebarHeader>
 
-            {/* Navigation Menu */}
             <SidebarContent>
                 <SidebarMenu>
                     {menuItems.map(({ label, href, icon: Icon }) => {
@@ -147,17 +148,15 @@ export function AppSidebar() {
                 </SidebarMenu>
             </SidebarContent>
 
-            {/* Footer */}
             <SidebarFooter>
                 <SidebarMenu className="flex flex-col gap-1">
-                    {/* User dropdown */}
                     <SidebarMenuItem>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <SidebarMenuButton className="w-full justify-start">
                                     <User2 className="h-4 w-4" />
                                     {!isCollapsed && (
-                                        <span className="ml-2 truncate">Username</span>
+                                        <span className="ml-2 truncate">{user?.username || "User"}</span>
                                     )}
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>
@@ -174,7 +173,6 @@ export function AppSidebar() {
                         </DropdownMenu>
                     </SidebarMenuItem>
 
-                    {/* Theme toggle */}
                     <SidebarMenuItem>
                         {isCollapsed ? (
                             <Tooltip delayDuration={0}>
