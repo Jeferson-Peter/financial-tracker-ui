@@ -57,8 +57,8 @@ export function AppSidebar() {
             icon: Home,
         },
         {
-            label: "Reports",
-            href: "/dashboard/reports",
+            label: "Account Types",
+            href: "/account-types",
             icon: LineChart,
         },
         {
