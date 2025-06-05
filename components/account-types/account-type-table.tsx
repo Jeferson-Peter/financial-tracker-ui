@@ -23,13 +23,8 @@ import { toast } from "sonner";
 import { extractQuery } from "@/lib/utils";
 import { accountTypeColumns } from "@/components/account-types/account-type-column";
 import { AccountType } from "@/types/account-types";
+import {PaginatedResponse} from "@/types/types";
 
-type PaginatedResponse<T> = {
-    count: number;
-    next: string | null;
-    previous: string | null;
-    results: T[];
-};
 
 interface DataTableProps {
     initialUrl?: string;
