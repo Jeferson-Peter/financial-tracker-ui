@@ -27,7 +27,7 @@ import {
 
 import {
     Home,
-    LineChart,
+    Layers,
     CreditCard,
     LogOut,
     Menu,
@@ -59,11 +59,11 @@ export function AppSidebar() {
         {
             label: "Account Types",
             href: "/account-types",
-            icon: LineChart,
+            icon: Layers,
         },
         {
-            label: "Transactions",
-            href: "/dashboard/transactions",
+            label: "Accounts",
+            href: "/accounts",
             icon: CreditCard,
         },
     ];
